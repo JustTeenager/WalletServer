@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import java.util.*
 
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
@@ -27,4 +28,16 @@ fun Application.configureSecurity() {
             }
         }
     }
+}
+
+fun Application.createJWT(userId: Long): String {
+    val secret = environment.config.property("jwt.secret").getString()
+    val issuer = environment.config.property("jwt.issuer").getString()
+    val audience = environment.config.property("jwt.audience").getString()
+    return JWT.create()
+        .withAudience(audience)
+        .withIssuer(issuer)
+        .withClaim("user_id", userId)
+        .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+        .sign(Algorithm.HMAC256(secret))
 }
