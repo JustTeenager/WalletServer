@@ -34,9 +34,3 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
-
-      - name: Deploy (optional)
-        if: github.ref == 'refs/heads/main'  # Только для основной ветки
-        run: |
-          echo "Deploying to your server"
-          # Добавьте команды для развертывания на вашем сервере здесь
