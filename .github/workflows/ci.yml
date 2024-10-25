@@ -38,4 +38,4 @@ jobs:
       - name: Deploy
         uses: some/deploy-action@v1
         with:
-          distribution: 'dummy-distribution-value'  # здесь укажите фиктивное значение
+          distribution: 'dummy-distribution-value'
