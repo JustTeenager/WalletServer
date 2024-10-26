@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     id("io.ktor.plugin") version "2.3.9"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
 group = "swartwallet.ru"
@@ -21,6 +22,12 @@ application {
 
 repositories {
     mavenCentral()
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-base:1.9.20")
+    }
 }
 
 dependencies {

@@ -7,6 +7,10 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
 
+/**
+ *
+ * @author AEKotov
+ */
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
     val jwtAudience = "jwt-audience"
