@@ -36,3 +36,11 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
+      - name: Add automerge label
+        run: gh issue edit "$NUMBER" --add-label "automerge"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: triage
+
