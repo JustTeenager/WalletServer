@@ -1,0 +1,39 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.example.database////PointingToDeclaration/com.example.wallet-server/com.example.database/index.html
+$dokka.location:com.example.database/ExposedUser///PointingToDeclaration/com.example.wallet-server/com.example.database/-exposed-user/index.html
+$dokka.location:com.example.database/ExposedUser/ExposedUser/#kotlin.Long#kotlin.String/PointingToDeclaration/com.example.wallet-server/com.example.database/-exposed-user/-exposed-user.html
+$dokka.location:com.example.database/ExposedUser/email/#/PointingToDeclaration/com.example.wallet-server/com.example.database/-exposed-user/email.html
+$dokka.location:com.example.database/ExposedUser/id/#/PointingToDeclaration/com.example.wallet-server/com.example.database/-exposed-user/id.html
+$dokka.location:com.example.database/UserService.Users///PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/-users/index.html
+$dokka.location:com.example.database/UserService.Users/email/#/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/-users/email.html
+$dokka.location:com.example.database/UserService.Users/id/#/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/-users/id.html
+$dokka.location:com.example.database/UserService.Users/primaryKey/#/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/-users/primary-key.html
+$dokka.location:com.example.database/UserService///PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/index.html
+$dokka.location:com.example.database/UserService/UserService/#org.jetbrains.exposed.sql.Database/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/-user-service.html
+$dokka.location:com.example.database/UserService/create/#com.example.database.ExposedUser/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/create.html
+$dokka.location:com.example.database/UserService/read/#kotlin.String/PointingToDeclaration/com.example.wallet-server/com.example.database/-user-service/read.html
+$dokka.location:com.example.plugins////PointingToDeclaration/com.example.wallet-server/com.example.plugins/index.html
+$dokka.location:com.example.plugins//configureHTTP/io.ktor.server.application.Application#/PointingToDeclaration/com.example.wallet-server/com.example.plugins/configure-h-t-t-p.html
+$dokka.location:com.example.plugins//configureRouting/io.ktor.server.application.Application#/PointingToDeclaration/com.example.wallet-server/com.example.plugins/configure-routing.html
+$dokka.location:com.example.plugins//configureSecurity/io.ktor.server.application.Application#/PointingToDeclaration/com.example.wallet-server/com.example.plugins/configure-security.html
+$dokka.location:com.example.plugins//configureSerialization/io.ktor.server.application.Application#/PointingToDeclaration/com.example.wallet-server/com.example.plugins/configure-serialization.html
+$dokka.location:com.example.plugins//createJWT/io.ktor.server.application.Application#kotlin.Long/PointingToDeclaration/com.example.wallet-server/com.example.plugins/create-j-w-t.html
+$dokka.location:com.example.request////PointingToDeclaration/com.example.wallet-server/com.example.request/index.html
+$dokka.location:com.example.request/UserRequest///PointingToDeclaration/com.example.wallet-server/com.example.request/-user-request/index.html
+$dokka.location:com.example.request/UserRequest/UserRequest/#kotlin.String/PointingToDeclaration/com.example.wallet-server/com.example.request/-user-request/-user-request.html
+$dokka.location:com.example.request/UserRequest/email/#/PointingToDeclaration/com.example.wallet-server/com.example.request/-user-request/email.html
+$dokka.location:com.example.routers////PointingToDeclaration/com.example.wallet-server/com.example.routers/index.html
+$dokka.location:com.example.routers//personRouting/io.ktor.server.application.Application#org.jetbrains.exposed.sql.Database/PointingToDeclaration/com.example.wallet-server/com.example.routers/person-routing.html
+$dokka.location:com.example.utils////PointingToDeclaration/com.example.wallet-server/com.example.utils/index.html
+$dokka.location:com.example.utils//connectDatabase/#/PointingToDeclaration/com.example.wallet-server/com.example.utils/connect-database.html
+$dokka.location:com.example////PointingToDeclaration/com.example.wallet-server/com.example/index.html
+$dokka.location:com.example//main/#/PointingToDeclaration/com.example.wallet-server/com.example/main.html
+$dokka.location:com.example//module/io.ktor.server.application.Application#/PointingToDeclaration/com.example.wallet-server/com.example/module.html
+com.example
+com.example.database
+com.example.plugins
+com.example.request
+com.example.routers
+com.example.utils
+
