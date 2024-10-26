@@ -13,7 +13,6 @@ fun Application.configureSecurity() {
     val jwtDomain = "https://jwt-provider-domain/"
     val jwtRealm = "ktor sample app"
     val jwtSecret = "secret"
-
     authentication {
         jwt {
             realm = jwtRealm
