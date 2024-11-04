@@ -7,6 +7,8 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
 
+private const val TOKEN_LIFETIME = 1000 * 60 * 15 // 15 минут
+
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
     val jwtAudience = "jwt-audience"
@@ -37,6 +39,6 @@ fun createJWT(userId: Long): String {
         .withAudience(audience)
         .withIssuer(issuer)
         .withClaim("user_id", userId)
-        .withExpiresAt(Date(System.currentTimeMillis() + 60000000))
+        .withExpiresAt(Date(System.currentTimeMillis() + TOKEN_LIFETIME))
         .sign(Algorithm.HMAC256(secret))
 }

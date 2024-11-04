@@ -8,9 +8,9 @@ import com.example.mappers.toWalletResponse
 import com.example.models.response.main_screen.BalanceResponse
 import com.example.models.response.main_screen.MainScreenResponse
 import com.example.utils.toStringWithFormat
+import com.example.utils.withUserId
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
@@ -22,18 +22,16 @@ fun Application.mainScreenRouting(database: Database) {
     routing {
         authenticate("auth-jwt") {
             get("/wallets/person/all") {
-                val principal = call.authentication.principal<JWTPrincipal>()
-                val userId = principal?.payload?.getClaim("user_id")?.asLong()!!
-
-                val response = getMainScreenResponse(walletService, userId, courceService)
-
-                call.respond(response)
+                withUserId { userId ->
+                    val response = getMainScreenResponse(walletService, userId, courceService)
+                    call.respond(response)
+                }
             }
         }
     }
 }
 
-suspend fun getMainScreenResponse(
+private suspend fun getMainScreenResponse(
     walletService: WalletService,
     userId: Long,
     courceService: CourceService
@@ -41,7 +39,7 @@ suspend fun getMainScreenResponse(
     val exposedWallets = walletService.getWalletsByUser(userId)
 
     val balance = getBalanceRequest(exposedWallets)
-    val exchanges = courceService.getCourcesWithoutRub().map { it.toCurrencyResponse() }
+    val exchanges = courceService.getCoursesWithoutRub().map { it.toCurrencyResponse() }
     val wallets = exposedWallets.map { it.toWalletResponse() }
     return MainScreenResponse(balance, exchanges, wallets)
 }

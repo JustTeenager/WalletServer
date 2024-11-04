@@ -38,8 +38,8 @@ class WalletService(database: Database) {
     suspend fun getWalletsByUser(userId: Long): List<ExposedWallet> {
         return dbQuery {
             Join(
-                Wallets, CourceService.Cources,
-                onColumn = Wallets.currencyId, otherColumn = CourceService.Cources.id,
+                Wallets, CourceService.Courses,
+                onColumn = Wallets.currencyId, otherColumn = CourceService.Courses.id,
                 joinType = JoinType.INNER
             ).select {
                 Wallets.userId eq userId
@@ -53,12 +53,12 @@ class WalletService(database: Database) {
                     limit = it[Wallets.limit],
                     currency = ExposedCource(
                         it[Wallets.currencyId],
-                        name = it[CourceService.Cources.name],
-                        course = it[CourceService.Cources.cource],
-                        fullName = it[CourceService.Cources.fullName],
-                        fullListName = it[CourceService.Cources.fullListName],
-                        icon = it[CourceService.Cources.icon],
-                        isUp = it[CourceService.Cources.isUp]
+                        name = it[CourceService.Courses.name],
+                        course = it[CourceService.Courses.cource],
+                        fullName = it[CourceService.Courses.fullName],
+                        fullListName = it[CourceService.Courses.fullListName],
+                        icon = it[CourceService.Courses.icon],
+                        isUp = it[CourceService.Courses.isUp]
                     )
                 )
             }

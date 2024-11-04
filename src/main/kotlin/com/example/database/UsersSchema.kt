@@ -1,10 +1,9 @@
 package com.example.database
 
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import com.example.utils.dbQuery
 import kotlinx.serialization.Serializable
-import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
 @Serializable
 data class ExposedUser(val id: Long, val email: String)
@@ -22,9 +21,6 @@ class UserService(database: Database) {
             SchemaUtils.create(Users)
         }
     }
-
-    suspend fun <T> dbQuery(block: suspend () -> T): T =
-        newSuspendedTransaction(Dispatchers.IO) { block() }
 
     suspend fun create(user: ExposedUser): Long = dbQuery {
         Users.insert {

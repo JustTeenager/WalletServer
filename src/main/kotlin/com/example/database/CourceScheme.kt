@@ -19,7 +19,7 @@ data class ExposedCource(
 )
 
 class CourceService(database: Database) {
-    object Cources : Table() {
+    object Courses : Table() {
         val id = long("id").autoIncrement()
         val name = varchar("name", 1)
         val cource = decimal("cource", 25, 5)
@@ -33,23 +33,23 @@ class CourceService(database: Database) {
 
     init {
         transaction(database) {
-            SchemaUtils.create(Cources)
+            SchemaUtils.create(Courses)
         }
     }
 
-    suspend fun getCourcesWithoutRub(): List<ExposedCource> {
+    suspend fun getCoursesWithoutRub(): List<ExposedCource> {
         return dbQuery {
-            Cources.select {
-                Cources.name neq "RUB"
+            Courses.select {
+                Courses.name neq "RUB"
             }.map {
                 ExposedCource(
-                    it[Cources.id],
-                    it[Cources.name],
-                    it[Cources.cource],
-                    it[Cources.fullName],
-                    it[Cources.fullListName],
-                    it[Cources.icon],
-                    it[Cources.isUp]
+                    it[Courses.id],
+                    it[Courses.name],
+                    it[Courses.cource],
+                    it[Courses.fullName],
+                    it[Courses.fullListName],
+                    it[Courses.icon],
+                    it[Courses.isUp]
                 )
             }
         }
