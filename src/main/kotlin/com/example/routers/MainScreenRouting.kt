@@ -31,7 +31,7 @@ fun Application.mainScreenRouting(database: Database) {
     }
 }
 
-private suspend fun getMainScreenResponse(
+suspend fun getMainScreenResponse(
     walletService: WalletService,
     userId: Long,
     courceService: CourceService

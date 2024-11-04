@@ -27,7 +27,7 @@ fun BigDecimal.toStringWithFormat(): String {
     return this.setScale(2, RoundingMode.HALF_UP).toPlainString()
 }
 
-suspend fun PipelineContext<Unit, ApplicationCall>.withUserId(respond: suspend (Long) -> Unit) {
+suspend inline fun PipelineContext<Unit, ApplicationCall>.withUserId(respond: (Long) -> Unit) {
     val principal = call.authentication.principal<JWTPrincipal>()
     val userId = principal?.payload?.getClaim("user_id")?.asLong() ?: run {
         call.respond(HttpStatusCode.Unauthorized, "Unauthorized")

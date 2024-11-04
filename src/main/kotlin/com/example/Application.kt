@@ -5,6 +5,7 @@ import com.example.plugins.configureSecurity
 import com.example.plugins.configureSerialization
 import com.example.routers.mainScreenRouting
 import com.example.routers.personRouting
+import com.example.routers.walletRouting
 import com.example.utils.connectDatabase
 import com.example.utils.getEnvProperty
 import io.ktor.server.application.*
@@ -28,5 +29,6 @@ fun Application.module() {
 
     personRouting(database)
     mainScreenRouting(database)
+    walletRouting(database)
 }
 

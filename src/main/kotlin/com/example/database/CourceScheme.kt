@@ -58,4 +58,20 @@ class CourceService(database: Database) {
             }
         }
     }
+
+    suspend fun getCourceById(id: Long): ExposedCource? {
+        return dbQuery {
+            Courses.select { Courses.id eq id }.map {
+                ExposedCource(
+                    it[Courses.id],
+                    it[Courses.name],
+                    it[Courses.cource],
+                    it[Courses.fullName],
+                    it[Courses.fullListName],
+                    it[Courses.icon],
+                    it[Courses.isUp]
+                )
+            }
+        }.singleOrNull()
+    }
 }
