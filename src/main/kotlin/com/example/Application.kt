@@ -1,6 +1,8 @@
 package com.example
 
 import com.example.plugins.*
+import com.example.routers.personRouting
+import com.example.utils.connectDatabase
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -11,10 +13,11 @@ fun main() {
 }
 
 fun Application.module() {
+    val database = connectDatabase()
     configureSerialization()
-    configureDatabases()
     configureHTTP()
     configureSecurity()
-    configureRouting()
+
+    personRouting(database)
 }
 
