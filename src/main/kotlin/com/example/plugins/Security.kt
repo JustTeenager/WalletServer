@@ -7,24 +7,21 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
 
-/**
- *
- * @author AEKotov
- */
+private const val TOKEN_LIFETIME = 1000 * 60 * 15 // 15 минут
+
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
     val jwtAudience = "jwt-audience"
-    val jwtDomain = "https://jwt-provider-domain/"
     val jwtRealm = "ktor sample app"
     val jwtSecret = "secret"
-    authentication {
-        jwt {
+    val issuer = "issuer"
+    install(Authentication) {
+        jwt("auth-jwt") {
             realm = jwtRealm
             verifier(
-                JWT
-                    .require(Algorithm.HMAC256(jwtSecret))
+                JWT.require(Algorithm.HMAC256(jwtSecret))
                     .withAudience(jwtAudience)
-                    .withIssuer(jwtDomain)
+                    .withIssuer(issuer)
                     .build()
             )
             validate { credential ->
@@ -34,14 +31,14 @@ fun Application.configureSecurity() {
     }
 }
 
-fun Application.createJWT(userId: Long): String {
-    val secret = environment.config.property("jwt.secret").getString()
-    val issuer = environment.config.property("jwt.issuer").getString()
-    val audience = environment.config.property("jwt.audience").getString()
+fun createJWT(userId: Long): String {
+    val secret = "secret"
+    val issuer = "issuer"
+    val audience = "jwt-audience"
     return JWT.create()
         .withAudience(audience)
         .withIssuer(issuer)
         .withClaim("user_id", userId)
-        .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+        .withExpiresAt(Date(System.currentTimeMillis() + TOKEN_LIFETIME))
         .sign(Algorithm.HMAC256(secret))
 }
