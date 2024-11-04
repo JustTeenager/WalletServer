@@ -19,9 +19,13 @@ data class ExposedCource(
 )
 
 class CourceService(database: Database) {
+    companion object {
+        private const val RUB_NAME = "RUB"
+    }
+
     object Courses : Table() {
         val id = long("id").autoIncrement()
-        val name = varchar("name", 1)
+        val name = varchar("name", 3)
         val cource = decimal("cource", 25, 5)
         val fullName = varchar("full_name", 250)
         val fullListName = varchar("full_list_name", 250)
@@ -40,7 +44,7 @@ class CourceService(database: Database) {
     suspend fun getCoursesWithoutRub(): List<ExposedCource> {
         return dbQuery {
             Courses.select {
-                Courses.name neq "RUB"
+                Courses.name neq RUB_NAME
             }.map {
                 ExposedCource(
                     it[Courses.id],
