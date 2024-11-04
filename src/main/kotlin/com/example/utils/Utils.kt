@@ -1,11 +1,10 @@
 package com.example.utils
 
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
-import io.ktor.util.pipeline.*
+import io.ktor.server.routing.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -27,7 +26,7 @@ fun BigDecimal.toStringWithFormat(): String {
     return this.setScale(2, RoundingMode.HALF_UP).toPlainString()
 }
 
-suspend inline fun PipelineContext<Unit, ApplicationCall>.withUserId(respond: (Long) -> Unit) {
+suspend inline fun RoutingContext.withUserId(respond: (Long) -> Unit) {
     val principal = call.authentication.principal<JWTPrincipal>()
     val userId = principal?.payload?.getClaim("user_id")?.asLong() ?: run {
         call.respond(HttpStatusCode.Unauthorized, "Unauthorized")
