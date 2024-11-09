@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserRequest(
     @SerialName("email")
-    val email: String
+    val email: String,
+    @SerialName("name")
+    val name: String,
 )
