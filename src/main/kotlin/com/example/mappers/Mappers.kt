@@ -24,5 +24,5 @@ fun ExposedCource.toCurrencyResponse() = CurrencyResponse(
     fullName = fullName,
     fullListName = fullListName,
     icon = icon,
-    isUp = isUp
+    isHide = isUp
 )
