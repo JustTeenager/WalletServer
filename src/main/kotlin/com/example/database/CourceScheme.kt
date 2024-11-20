@@ -1,10 +1,7 @@
 package com.example.database
 
 import com.example.utils.dbQuery
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.math.BigDecimal
 
@@ -38,6 +35,24 @@ class CourceService(database: Database) {
     init {
         transaction(database) {
             SchemaUtils.create(Courses)
+        }
+    }
+
+    suspend fun getCources(): List<ExposedCource> {
+        return dbQuery {
+            Courses
+                .selectAll()
+                .map {
+                    ExposedCource(
+                        it[Courses.id],
+                        it[Courses.name],
+                        it[Courses.cource],
+                        it[Courses.fullName],
+                        it[Courses.fullListName],
+                        it[Courses.icon],
+                        it[Courses.isUp]
+                    )
+                }
         }
     }
 

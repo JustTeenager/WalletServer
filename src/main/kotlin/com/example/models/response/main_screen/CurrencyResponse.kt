@@ -15,7 +15,8 @@ data class CurrencyResponse(
     val fullName: String? = null,
     @SerialName("full_list_name")
     val fullListName: String? = null,
+    @SerialName("icon")
     val icon: String? = null,
-    @SerialName("is_up")
-    val isUp: Boolean
+    @SerialName("is_hide")
+    val isHide: Boolean
 )

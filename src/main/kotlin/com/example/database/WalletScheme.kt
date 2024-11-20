@@ -146,4 +146,46 @@ class WalletService(database: Database) {
             )
         }.singleOrNull()
     }
+
+    suspend fun increaseMoney(
+        walletId: Long,
+        income: BigDecimal?,
+        outcome: BigDecimal?,
+        transactionCource: ExposedCource,
+        userId: Long,
+    ): Boolean {
+        return dbQuery {
+            val wallet = getWallet(walletId, userId) ?: return@dbQuery false
+            val cource = transactionCource.course / wallet.currency.course
+            Wallets.update({ Wallets.id eq walletId }) {
+                if (outcome != null) {
+                    it[Wallets.outcome] = wallet.outcome + outcome * cource
+                } else if (income != null) {
+                    it[Wallets.income] = wallet.income + income * cource
+                }
+            }
+            true
+        }
+    }
+
+    suspend fun decreaseMoney(
+        walletId: Long,
+        income: BigDecimal?,
+        outcome: BigDecimal?,
+        transactionCource: ExposedCource,
+        userId: Long,
+    ): Boolean {
+        return dbQuery {
+            val wallet = getWallet(walletId, userId) ?: return@dbQuery false
+            val cource = transactionCource.course / wallet.currency.course
+            Wallets.update({ Wallets.id eq walletId }) {
+                if (outcome != null) {
+                    it[Wallets.outcome] = wallet.outcome - outcome * cource
+                } else if (income != null) {
+                    it[Wallets.income] = wallet.income - income * cource
+                }
+            }
+            true
+        }
+    }
 }
