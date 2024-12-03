@@ -31,5 +31,6 @@ fun Application.module() {
     categoryRouting(database)
     courceRouting(database)
     transactionRouting(database)
+    cartInfoRouting(database)
 }
 
