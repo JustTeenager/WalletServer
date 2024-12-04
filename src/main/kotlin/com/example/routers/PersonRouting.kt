@@ -12,8 +12,14 @@ import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 import kotlin.random.Random
 
+/**
+ * Создание ручки запроса токена
+ */
 fun Application.personRouting(database: Database) {
     routing {
+        /**
+         * Достаем пользователя или создаем нового, после этого создаем токен на основе id
+         */
         val userService = UserService(database)
         post("/person") {
             val user = call.receive<UserRequest>()

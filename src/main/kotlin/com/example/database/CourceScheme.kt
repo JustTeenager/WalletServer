@@ -15,11 +15,20 @@ data class ExposedCource(
     val isUp: Boolean = false
 )
 
+/**
+ * Сервис, ответственный за работу с курсами валют
+ * Несет в себе таблицу бд для курсов, заполняет ее
+ * Позволяет достать список курсов или какой-то конкретный курс
+ */
 class CourceService(database: Database) {
     companion object {
         private const val RUB_NAME = "RUB"
     }
 
+    /**
+     * Объявление таблицы курсов в бд
+     * курсы хранятся относительно рубля (соответственно курс самого рубля = 1)
+     */
     object Courses : Table() {
         val id = long("id").autoIncrement()
         val name = varchar("name", 3)
@@ -32,12 +41,18 @@ class CourceService(database: Database) {
         override val primaryKey = PrimaryKey(id)
     }
 
+    /**
+     * Создание таблицы курсов
+     */
     init {
         transaction(database) {
             SchemaUtils.create(Courses)
         }
     }
 
+    /**
+     * Метод возвращает список курсов
+     */
     suspend fun getCources(): List<ExposedCource> {
         return dbQuery {
             Courses
@@ -56,6 +71,9 @@ class CourceService(database: Database) {
         }
     }
 
+    /**
+     * Метод возвращает список курсов, исключая рубль
+     */
     suspend fun getCoursesWithoutRub(): List<ExposedCource> {
         return dbQuery {
             Courses.select {
@@ -74,6 +92,9 @@ class CourceService(database: Database) {
         }
     }
 
+    /**
+     * Метод возвращает список курсов
+     */
     suspend fun getCourceById(id: Long): ExposedCource? {
         return dbQuery {
             Courses.select { Courses.id eq id }.map {

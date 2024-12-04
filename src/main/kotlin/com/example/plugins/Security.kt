@@ -9,6 +9,9 @@ import java.util.*
 
 private const val TOKEN_LIFETIME = 1000 * 60 * 15 // 15 минут
 
+/**
+ * Настройка работы с авторизацией через jwt
+ */
 fun Application.configureSecurity() {
     // Please read the jwt property from the config file if you are using EngineMain
     val jwtAudience = "jwt-audience"

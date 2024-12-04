@@ -10,6 +10,9 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
+/**
+ * Метод запуска сервера
+ */
 fun main() {
     embeddedServer(
         Netty,
@@ -19,12 +22,21 @@ fun main() {
     ).start(wait = true)
 }
 
+/**
+ * Метод "собирает" все созданные нами ручки, делает их частью сервера
+ */
 fun Application.module() {
     val database = connectDatabase()
+    /**
+     *  Настройки сериализации, безопасности, HTTP-формата
+     */
     configureSerialization()
     configureHTTP()
     configureSecurity()
 
+    /**
+     * Настройки созданных ручек
+     */
     personRouting(database)
     mainScreenRouting(database)
     walletRouting(database)

@@ -10,12 +10,17 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 
+/**
+ * Создание ручек для работы с курсами
+ */
 fun Application.courceRouting(database: Database) {
 
     routing {
         authenticate("auth-jwt") {
             val courceService = CourceService(database)
-
+            /**
+             * Возвращаем данные из courceService
+             */
             get("/currencies") {
                 call.respond(courceService.getCources().map { it.toCurrencyResponse() })
             }

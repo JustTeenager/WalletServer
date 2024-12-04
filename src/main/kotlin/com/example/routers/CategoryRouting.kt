@@ -15,10 +15,17 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 
+/**
+ * Создание ручек для работы с категориями
+ */
 fun Application.categoryRouting(database: Database) {
     routing {
         authenticate("auth-jwt") {
             val categoryService = CategoryService(database)
+            /**
+             * Получение списка категорий
+             * берем категории из categoryService и возвращем по ним response
+             */
             get("/categories") {
                 val principal = call.authentication.principal<JWTPrincipal>()
                 val userId = principal?.payload?.getClaim("user_id")?.asLong()!!
@@ -26,6 +33,10 @@ fun Application.categoryRouting(database: Database) {
                 call.respond(categories.map { it.toResponse() })
             }
 
+            /**
+             * Создание категории
+             * Данные из запроса связываем с userId и отправляем базу данных через categoryService
+             */
             post("/categories") {
                 val principal = call.authentication.principal<JWTPrincipal>()
                 val userId = principal?.payload?.getClaim("user_id")?.asLong()!!

@@ -19,11 +19,17 @@ import org.jetbrains.exposed.sql.Database
 import java.math.BigDecimal
 import kotlin.random.Random
 
+/**
+ * Создание ручек работы с кошельками
+ */
 fun Application.walletRouting(database: Database) {
     val walletService = WalletService(database)
     val courceService = CourceService(database)
     routing {
         authenticate("auth-jwt") {
+            /**
+             * Ручка получения списка кошельков
+             */
             get("/wallets") {
                 withUserId { userId ->
                     val wallets = walletService.getWalletsByUser(userId)
@@ -31,6 +37,10 @@ fun Application.walletRouting(database: Database) {
                 }
             }
 
+            /**
+             * Ручка удаления кошелька по айди
+             * Перед овтетом проверяем, получилось ли удалить кошелек
+             */
             delete("/wallets/{walletId}") {
                 withUserId { userId ->
                     val walletId = call.parameters["walletId"]?.toLong() ?: -1
@@ -46,6 +56,9 @@ fun Application.walletRouting(database: Database) {
                 }
             }
 
+            /**
+             * Ручка создание кошелька
+             */
             post("/wallets") {
                 withUserId { userId ->
                     val walletRequest = call.receive<WalletRequest>()
@@ -54,6 +67,10 @@ fun Application.walletRouting(database: Database) {
                 }
             }
 
+            /**
+             * Ручка обновления кошелька
+             * Проходит ряд проверок (на курс, на само редактирование, на возврат отредактированного значения)
+             */
             put("/wallets/{walletId}") {
                 withUserId { userId ->
                     val walletId = call.parameters["walletId"]?.toLong() ?: -1

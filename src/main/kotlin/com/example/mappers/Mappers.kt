@@ -6,6 +6,9 @@ import com.example.models.response.WalletResponse
 import com.example.models.response.main_screen.CurrencyResponse
 import com.example.utils.toStringWithFormat
 
+/**
+ * Перевод сущности из бд кошелька в сущность элемента кошелька
+ */
 fun ExposedWallet.toWalletResponse() = WalletResponse(
     id = this.id,
     name = this.name,
@@ -17,6 +20,9 @@ fun ExposedWallet.toWalletResponse() = WalletResponse(
     isHide = this.isHide
 )
 
+/**
+ * Перевод сущности из бд курса в сущность элемента курса
+ */
 fun ExposedCource.toCurrencyResponse() = CurrencyResponse(
     currencyId = currencyId,
     name = name,

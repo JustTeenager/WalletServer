@@ -16,6 +16,10 @@ data class ExposedWallet(
     val currency: ExposedCource
 )
 
+/**
+ * Сервис кошельков в базе данных
+ *
+ */
 class WalletService(database: Database) {
     object Wallets : Table() {
         val id = long("id").autoIncrement()
@@ -36,6 +40,10 @@ class WalletService(database: Database) {
         }
     }
 
+    /**
+     * Запрос всех кошельков пользователя
+     * Join-запрос, ищем всех кошельки с нужным курсом и с нужным userId
+     */
     suspend fun getWalletsByUser(userId: Long): List<ExposedWallet> {
         return dbQuery {
             Join(
@@ -67,6 +75,9 @@ class WalletService(database: Database) {
     }
 
 
+    /**
+     * Создание кошелька
+     */
     suspend fun createWallet(wallet: ExposedWallet, usId: Long): ExposedWallet = dbQuery {
         val walletDB = Wallets.insert {
             it[name] = wallet.name
@@ -80,6 +91,10 @@ class WalletService(database: Database) {
         wallet.copy(id = walletDB[Wallets.id])
     }
 
+    /**
+     * Редактирование кошелька
+     * Сначала берем нужный кошелек, потом его обновляем с учетом курса
+     */
     suspend fun editWallet(
         wallet: ExposedWallet,
         userId: Long,
@@ -106,6 +121,9 @@ class WalletService(database: Database) {
         true
     }
 
+    /**
+     * Удаление кошелька по id кошелька и пользователя
+     */
     suspend fun deleteWallet(walletId: Long, userId: Long): Boolean {
         return dbQuery {
             val result = Wallets.deleteWhere { (id eq walletId) and (Wallets.userId eq userId) }
@@ -113,12 +131,16 @@ class WalletService(database: Database) {
         }
     }
 
+
     suspend fun getById(walletId: Long, userId: Long): ExposedWallet? {
         return dbQuery {
             getWallet(walletId, userId)
         }
     }
 
+    /**
+     * Возврат кошелька с нужным айди и курсом (Join-запрос)
+     */
     private fun getWallet(walletId: Long, userId: Long): ExposedWallet? {
         return Join(
             table = Wallets, CourceService.Courses,
@@ -147,6 +169,9 @@ class WalletService(database: Database) {
         }.singleOrNull()
     }
 
+    /**
+     * Увеличение количества доходов/расходов с учетом курса
+     */
     suspend fun increaseMoney(
         walletId: Long,
         income: BigDecimal?,
@@ -168,6 +193,9 @@ class WalletService(database: Database) {
         }
     }
 
+    /**
+     * Увеличение количества доходов/расходов с учетом курса
+     */
     suspend fun decreaseMoney(
         walletId: Long,
         income: BigDecimal?,

@@ -15,12 +15,18 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 
+/**
+ * Создание ручек для работы главной страницы
+ */
 fun Application.mainScreenRouting(database: Database) {
     val walletService = WalletService(database)
     val courceService = CourceService(database)
 
     routing {
         authenticate("auth-jwt") {
+            /**
+             * С помощью специального метода собираем ответ для главной страницы из walletService и courceService
+             */
             get("/wallets/person/all") {
                 withUserId { userId ->
                     val response = getMainScreenResponse(walletService, userId, courceService)
